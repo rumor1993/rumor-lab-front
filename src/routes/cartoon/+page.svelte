@@ -20,7 +20,7 @@
         })
 
         const jsonData = await response.json()
-        convertImage.fileName =  jsonData.fileName
+        convertImage.fileName = jsonData.fileName
         convertImage.imageUrl = "http://api.rumor-lab.com" + jsonData.cartoonImagePath
 
         isLoading = false
@@ -36,13 +36,13 @@
     function handleCopy() {
         if (convertImage.imageUrl == null || convertImage.imageUrl == "") {
             isInfoShow = true
-            setTimeout(() => isInfoShow = false , 1000)
+            setTimeout(() => isInfoShow = false, 1000)
             return
         }
 
         const app = new CopyClipBoard({
             target: document.getElementById('clipboard'),
-            props: { "imageUrl": convertImage.imageUrl },
+            props: {"imageUrl": convertImage.imageUrl},
         });
         app.$destroy();
     }
@@ -51,7 +51,7 @@
         console.log(url)
         if (url == null || url == "" || filename == null || filename == "") {
             isInfoShow = true
-            setTimeout(() => isInfoShow = false , 1000)
+            setTimeout(() => isInfoShow = false, 1000)
             return
         }
 
@@ -72,16 +72,26 @@
 </script>
 
 
-<div class:hidden={!isInfoShow} class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+<div class:hidden={!isInfoShow} class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"></path>
+    </svg>
     <span class="sr-only">Info</span>
     <div>
         <span class="font-medium">Danger alert!</span> Please convert the image first.
     </div>
 </div>
 
-<div class:hidden={!isConverted} class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+<div class:hidden={!isConverted} class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
+    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"></path>
+    </svg>
     <span class="sr-only">Info</span>
     <div>
         <span class="font-medium">Success alert!</span> Your image has been successfully converted
@@ -92,27 +102,53 @@
     <div class="text-4xl font-bold text-center"> Convert Photo to Cartoon<br>in Seconds</div>
     <div class="w-96 h-96 mt-11 bg-white rounded-lg shadow-lg bg-center bg-cover">
         <label for="dropzone-file" style="background-image: url({convertImage.imageUrl})"
-               class="flex bg-center bg-cover flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+               class="flex bg-center bg-cover flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
             <div class:hidden={isConverted} class="flex flex-col items-center justify-center pt-5 pb-6">
                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
-                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                <p class="mb-2 text-sm text-gray-500 "><span
                         class="font-semibold">Click to upload</span> or drag and drop</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
             </div>
             <input id="dropzone-file" type="file" class="hidden" on:change={handleUpload}/>
         </label>
     </div>
 
-    <div class="mt-10">
-        <div class="text-center mb-10">
+    <div class="flex justify-center mt-6">
+        <div class="mx-2">
+            <a on:click={downloadFile(convertImage.imageUrl, convertImage.fileName)}>
+                <button type="button"
+                        class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 shadow-sm  hover:bg-gray-50  focus:ring-4 focus:ring-gray-300 focus:outline-none ">
+                    <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor"
+                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd"
+                              d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4zm7 5a1 1 0 00-2 0v1.586l-.293-.293a.999.999 0 10-1.414 1.414l2 2a.999.999 0 001.414 0l2-2a.999.999 0 10-1.414-1.414l-.293.293V9z"
+                              fill-rule="evenodd"></path>
+                    </svg>
+                    <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
+                </button>
+            </a>
+        </div>
+        <button id="clipboard" on:click={handleCopy} type="button"
+                class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 shadow-sm hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none">
+            <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path>
+                <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path>
+            </svg>
+            <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
+        </button>
+    </div>
+
+    <div class="">
+        <div class="text-center mb-6">
             <button disabled type="button" class:hidden={!isLoading}
-                    class="py-2.5 px-5 mr-2  text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center">
+                    class="py-2.5 px-5 mr-2  text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 inline-flex items-center">
                 <svg aria-hidden="true" role="status"
-                     class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101"
+                     class="inline w-4 h-4 mr-3 text-gray-200 animate-spin" viewBox="0 0 100 101"
                      fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                           fill="currentColor"/>
@@ -183,25 +219,11 @@
                         data-te-ripple-color="light"
                         class="mb-2 inline-block rounded px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                         style="background-color: #FFEB3B">
-                    <img class="w-4 h-4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/600px-KakaoTalk_logo.svg.png?20190617212005"/>
+                    <img class="w-4 h-4"
+                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/600px-KakaoTalk_logo.svg.png?20190617212005"/>
                 </button>
             </div>
-
-
-            <div class="mx-2">
-                <a on:click={downloadFile(convertImage.imageUrl, convertImage.fileName)}>
-                <button type="button" class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 dark:border-gray-600 hover:text-gray-900 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-                    <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4zm7 5a1 1 0 00-2 0v1.586l-.293-.293a.999.999 0 10-1.414 1.414l2 2a.999.999 0 001.414 0l2-2a.999.999 0 10-1.414-1.414l-.293.293V9z" fill-rule="evenodd"></path></svg>
-                    <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
-                </button>
-                </a>
-            </div>
-            <button id="clipboard" on:click={handleCopy} type="button" class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 dark:border-gray-600 hover:text-gray-900 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-                <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path></svg>
-                <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
-            </button>
         </div>
-
     </div>
 </div>
 
