@@ -1,6 +1,10 @@
 <script>
-    let imageUrl = ""
+    let convertImage = {fileName: "", imageUrl: ""}
     let isLoading = false
+    let isConverted = false
+    let isInfoShow = false
+
+    import CopyClipBoard from '../../component/CopyClipBoard.svelte';
 
     async function handleUpload(event) {
         isLoading = true
@@ -16,8 +20,11 @@
         })
 
         const jsonData = await response.json()
-        imageUrl = "http://api.rumor-lab.com" + jsonData.cartoonImagePath
-        document.querySelector(".svelte-card").style.backgroundImage = `url(${imageUrl})`
+        convertImage.fileName =  jsonData.fileName
+        convertImage.imageUrl = "http://api.rumor-lab.com" + jsonData.cartoonImagePath
+
+        isLoading = false
+        isConverted = true
 
         const reader = new FileReader();
         reader.onload = () => {
@@ -25,15 +32,68 @@
         };
         reader.readAsDataURL(file);
     }
+
+    function handleCopy() {
+        if (convertImage.imageUrl == null || convertImage.imageUrl == "") {
+            isInfoShow = true
+            setTimeout(() => isInfoShow = false , 1000)
+            return
+        }
+
+        const app = new CopyClipBoard({
+            target: document.getElementById('clipboard'),
+            props: { "imageUrl": convertImage.imageUrl },
+        });
+        app.$destroy();
+    }
+
+    function downloadFile(url, filename) {
+        console.log(url)
+        if (url == null || url == "" || filename == null || filename == "") {
+            isInfoShow = true
+            setTimeout(() => isInfoShow = false , 1000)
+            return
+        }
+
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error(error));
+    };
 </script>
 
 
+<div class:hidden={!isInfoShow} class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+    <span class="sr-only">Info</span>
+    <div>
+        <span class="font-medium">Danger alert!</span> Please convert the image first.
+    </div>
+</div>
+
+<div class:hidden={!isConverted} class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+    <span class="sr-only">Info</span>
+    <div>
+        <span class="font-medium">Success alert!</span> Your image has been successfully converted
+    </div>
+</div>
+
 <div class="grid place-items-center mt-10">
     <div class="text-4xl font-bold text-center"> Convert Photo to Cartoon<br>in Seconds</div>
-    <div class="w-96 mt-11 bg-white rounded-lg shadow-lg bg-center bg-cover">
-        <label for="dropzone-file"
-               class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+    <div class="w-96 h-96 mt-11 bg-white rounded-lg shadow-lg bg-center bg-cover">
+        <label for="dropzone-file" style="background-image: url({convertImage.imageUrl})"
+               class="flex bg-center bg-cover flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <div class:hidden={isConverted} class="flex flex-col items-center justify-center pt-5 pb-6">
                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -129,12 +189,14 @@
 
 
             <div class="mx-2">
+                <a on:click={downloadFile(convertImage.imageUrl, convertImage.fileName)}>
                 <button type="button" class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 dark:border-gray-600 hover:text-gray-900 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                     <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4zm7 5a1 1 0 00-2 0v1.586l-.293-.293a.999.999 0 10-1.414 1.414l2 2a.999.999 0 001.414 0l2-2a.999.999 0 10-1.414-1.414l-.293.293V9z" fill-rule="evenodd"></path></svg>
                     <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
                 </button>
+                </a>
             </div>
-            <button type="button" class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 dark:border-gray-600 hover:text-gray-900 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+            <button id="clipboard" on:click={handleCopy} type="button" class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 dark:border-gray-600 hover:text-gray-900 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                 <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path></svg>
                 <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
             </button>
@@ -144,107 +206,5 @@
 </div>
 
 <style>
-
-    section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 0.0;
-    }
-
-    h1 {
-        width: 100%;
-    }
-
-    h3 {
-        font-size: 23px;
-    }
-
-    .title {
-        font-size: 30px;
-        margin: 30px 0px 0px 0px;
-    }
-
-    .description {
-        font-size: 20px;
-        color: #85858a;
-    }
-
-    .header {
-        text-align: center;
-    }
-
-    .welcome img {
-        width: 100px;
-        margin: 0 auto;
-        display: block;
-    }
-
-    .body {
-        text-align: center;
-    }
-
-    .step div {
-        margin: 20px;
-    }
-
-    .upload-image {
-        cursor: pointer;
-        margin: 0px 50px 0px 50px;
-    }
-
-
-    .svelte-card {
-        width: 460px;
-        height: 500px;
-        border-radius: 25px;
-        background-color: #ffffff;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        margin: 0 auto;
-        margin-bottom: 20px;
-        background-size: cover;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .svelte-card-text {
-        margin: 12px;
-        font-size: 15px;
-        line-height: 23px;;
-    }
-
-    .upload-limit-text {
-        color: #9e9e9e;
-    }
-
-    .loading-bar {
-        margin: 0 auto;
-    }
-
-    .icon-container {
-        display: inline-block;
-    }
-
-    .alert-container {
-        position: fixed;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
-        WIDTH: 50%;
-        top: 25%;
-    }
-
-    @media (max-width: 440px) {
-        .svelte-card {
-            width: 320px;
-            height: 360px;
-            margin: 0 auto;
-            margin-top: 25px;
-        }
-
-    }
-
 
 </style>
