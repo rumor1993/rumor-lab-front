@@ -1,5 +1,5 @@
 
-<footer class="bg-white dark:bg-gray-900 mt-10 border-t-2" >
+<footer class="bg-white mt-10 border-t-2" >
     <div class="px-4 py-6 bg-white dark:bg-gray-700 md:flex md:items-center md:justify-between text-center">
         <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2023 <a href="https://rumor-lab.com">rumor-lab</a>. All Rights Reserved.
         </span>
