@@ -115,7 +115,7 @@
 
 
                 <div class="text-center mb-3 mt-8">
-                    <button disabled type="button" class:hidden={isLoading}
+                    <button disabled type="button" class:hidden={!isLoading}
                             class="py-2.5 px-5 mr-2  text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 inline-flex items-center">
                         <svg aria-hidden="true" role="status"
                              class="inline w-4 h-4 mr-3 text-gray-200 animate-spin" viewBox="0 0 100 101"
@@ -148,15 +148,17 @@
                 </button>
             </a>
         </div>
-        <button id="clipboard" on:click={handleCopy} type="button"
-                class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 shadow-sm hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none">
-            <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path>
-                <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path>
-            </svg>
-            <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
-        </button>
+        <div class="mx-2">
+            <button id="clipboard" on:click={handleCopy} type="button"
+                    class="relative w-[52px] h-[52px] text-gray-500 bg-white rounded-lg border border-gray-200 hover:text-gray-900 shadow-sm hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 focus:outline-none">
+                <svg aria-hidden="true" class="w-6 h-6 mx-auto mt-px" fill="currentColor" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path>
+                    <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path>
+                </svg>
+                <span class="absolute block mb-px text-sm font-medium -translate-y-1/2 -left-14 top-1/2"></span>
+            </button>
+        </div>
     </div>
 
     <div class="">
