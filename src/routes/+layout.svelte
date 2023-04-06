@@ -10,12 +10,12 @@
 
 
 <style lang="postcss">
+
     /* PC (해상도 1024px)*/
     @media all and (min-width:1024px) {
         :global(html) {
             width: 768px;
             margin: 0 auto;
-            margin-top: 72px;
         }
 
         :global(header) {
@@ -30,7 +30,6 @@
         :global(html) {
             width: 560px;
             margin: 0 auto;
-            margin-top: 72px;
         }
 
         :global(header) {
@@ -44,7 +43,6 @@
         :global(html) {
             width: 420px;
             margin: 0 auto;
-            margin-top: 72px;
             justify-content: center;
         }
 
