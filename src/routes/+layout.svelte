@@ -15,6 +15,12 @@
         :global(html) {
             width: 768px;
             margin: 0 auto;
+            margin-top: 72px;
+        }
+
+        :global(header) {
+            width: 768px;
+            margin: 0 auto;
         }
 
     }
@@ -24,8 +30,13 @@
         :global(html) {
             width: 560px;
             margin: 0 auto;
+            margin-top: 72px;
         }
 
+        :global(header) {
+            width: 560px;
+            margin: 0 auto;
+        }
     }
 
     /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
@@ -33,7 +44,13 @@
         :global(html) {
             width: 420px;
             margin: 0 auto;
+            margin-top: 72px;
             justify-content: center;
+        }
+
+        :global(header) {
+            width: 420px;
+            margin: 0 auto;
         }
     }
 </style>
